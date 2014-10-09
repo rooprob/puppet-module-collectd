@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export LD_PRELOAD=/lib/libip4tc.so
+exec /usr/sbin/collectd "$@"

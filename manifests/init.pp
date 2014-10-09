@@ -25,6 +25,19 @@ class collectd(
     before   => File['collectd.conf', 'collectd.d'],
   }
 
+  # https://github.com/collectd/collectd/issues/326
+  package { 'iptables-dev':
+    ensure => latest,
+  }
+  file { '/etc/default/collectd':
+    ensure  => file,
+    content => template("collectd/defaults.erb")
+  }
+  file { '/usr/sbin/collectd.wrapper':
+    ensure  => file,
+    content => template("collectd/wrapper.erb")
+  }
+
   file { 'collectd.d':
     ensure  => directory,
     path    => $collectd::params::plugin_conf_dir,
