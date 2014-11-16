@@ -32,12 +32,14 @@ class collectd(
   file { '/etc/default/collectd':
     ensure  => file,
     content => template("collectd/defaults.erb"),
+    require => Package[$package_name],
     notify  => Service['collectd'],
   }
   file { '/usr/sbin/collectd.wrapper':
     ensure  => file,
     content => template("collectd/wrapper.erb"),
     mode    => 0755,
+    require => Package[$package_name],
     notify  => Service['collectd'],
   }
 
