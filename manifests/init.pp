@@ -31,12 +31,14 @@ class collectd(
   }
   file { '/etc/default/collectd':
     ensure  => file,
-    content => template("collectd/defaults.erb")
+    content => template("collectd/defaults.erb"),
+    notify  => Service['collectd'],
   }
   file { '/usr/sbin/collectd.wrapper':
     ensure  => file,
     content => template("collectd/wrapper.erb"),
     mode    => 0755,
+    notify  => Service['collectd'],
   }
 
   file { 'collectd.d':
